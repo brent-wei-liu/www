@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>chart created with amCharts | amCharts</title>
+        <meta name="description" content="chart created using amCharts live editor" />
+
+        <!-- amCharts javascript sources -->
+        <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/amcharts.js"></script>
+        <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/serial.js"></script>
+
+        <!-- amCharts javascript code -->
+        <script type="text/javascript">
+            AmCharts.makeChart("chartdiv",
+                {
+                    "type": "serial",
+                    "pathToImages": "http://cdn.amcharts.com/lib/3/images/",
+                    "categoryField": "category",
+                    "startDuration": 1,
+                    "theme": "default",
+                    "categoryAxis": {
+                        "gridPosition": "start"
+                    },
+                    "trendLines": [],
+                    "graphs": [
+                        {
+                            "balloonText": "[[title]] of [[category]]:[[value]]",
+                            "fillAlphas": 0.16,
+                            "fillColors": "#FF8000",
+                            "id": "AmGraph-1",
+                            "title": "Window 1",
+                            "type": "column",
+                            "valueField": "column-1"
+                        },
+                        {
+                            "balloonText": "[[title]] of [[category]]:[[value]]",
+                            "bulletSize": 6,
+                            "fillAlphas": 0.36,
+                            "fillColors": "#FF8000",
+                            "id": "AmGraph-2",
+                            "title": "Window 2",
+                            "type": "column",
+                            "valueField": "column-2"
+                        },
+                        {
+                            "balloonColor": "#B51616",
+                            "balloonText": "[[title]] of [[category]]:[[value]]",
+                            "color": "",
+                            "columnWidth": 0.82,
+                            "fillAlphas": 0.62,
+                            "fillColors": "#FF8000",
+                            "fontSize": -1,
+                            "id": "AmGraph-3",
+                            "title": "Window 3",
+                            "type": "column",
+                            "valueField": "column-3"
+                        },
+                        {
+                            "fillAlphas": 1,
+                            "fillColors": "#FF8000",
+                            "id": "AmGraph-4",
+                            "title": "Current Window",
+                            "type": "column",
+                            "valueField": "column-4"
+                        },
+                        {
+                            "fillAlphas": 1,
+                            "fillColors": "#FF0000",
+                            "id": "AmGraph-5",
+                            "title": "Predict window",
+                            "type": "column",
+                            "valueField": "column-5"
+                        }
+                    ],
+                    "guides": [],
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "title": "Event Count"
+                        }
+                    ],
+                    "allLabels": [],
+                    "balloon": {},
+                    "legend": {
+                        "useGraphSettings": true
+                    },
+                    "titles": [
+                        {
+                            "id": "Title-1",
+                            "size": 15,
+                            "text": "Instance"
+                        }
+                    ],
+                    "dataProvider": [
+                        {
+                            "category": "category 1",
+                            "column-1": 8,
+                            "column-2": 5,
+                            "column-3": 89,
+                            "column-4": 15,
+                            "column-5": 61
+                        }
+                    ]
+                }
+            );
+        </script>
+    </head>
+    <body>
+        <div id="chartdiv" style="width: 50%; height: 400px; background-color: #FFFFFF;" ></div>
+    </body>
+</html>

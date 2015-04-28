@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log Analyzer</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../dist/css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script type="text/javascript" src="../vis/vis.js"></script>
+  <link href="../vis/vis.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    #frame {
+      width: 100%;
+      height: 99%;
+    }
+    #frame td {
+      padding: 10px;
+      height: 100%;
+    }
+    #error {
+      color: red;
+    }
+
+    #data {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d3d3d3;
+    }
+
+    #mynetwork {
+      float: left;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d3d3d3;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    textarea.example {
+      display: none;
+    }
+  </style>
+
+
+</head>
+
+<body onload="drawExample('example1')">
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Log Analyzer v1.0</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> DataSource</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-magic fa-fw"></i> Event Extraction</a>
+                        </li> 
+
+
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Event Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Event Mining<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="event_summarization.html"> Event Summarization</a>
+                                </li>
+                                <li>
+                                    <a href="t-pattern.html"> t-Pattern Mining</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html"> Temporal Log Mining</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html"> Rare Event Root Cause Mining</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-paw fa-fw"></i> Multiresolution Retrieval</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Dynamic Query Form</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Event Extraction</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+
+<ul class="nav nav-tabs" style="font-size: 22px;">
+  <li role="presentation" class="active" id='regex_p'><a href="#">Regex</a></li>
+  <li role="presentation" id='cluster_p'><a href="#">Cluster</a></li>
+</ul>
+            </div>
+            <div id="regex_panel">
+            <div class="row">
+            <div class="col-lg-6" style="padding:20px 0px;">
+
+<div class="panel panel-default">
+<div class="panel-heading">Data Sources</div>
+<div class="panel-body">
+
+<table id="data_source_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Upload Time</th>
+            <th>Count of Line</th>
+            <th>Staus</th>
+        </tr>
+    </thead>
+    <tbody id="patterns">
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>0</td><td>TRG-PE-CORE-NE80E-1-2014-11.log</td><td>10:22 AM 8/1/2014</td><td>100,012</td><td>100% Done</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>1</td><td>SALALAH-PE-CORE-NE80E-2-log.log</td><td>11:12 AM 8/3/2014</td><td>102,232</td><td>Running</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>2</td><td>QURUM-PE-CORE-NE80E-2_Log.log</td><td>10:22 AM 8/1/2014</td><td>736,837</td><td>Not Yet</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>3</td><td>TCC-PE-CORE-NE80E-1_log.log</td><td>14:22 AM 1/1/2015</td><td>1,817,363</td><td>60% Done</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>4</td><td>SEEB-PE-CORE-NE80E-2_Log.log</td><td>15:22 AM 2/2/2015</td><td>3,827,438</td><td>Running</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>5</td><td>SUWAIQ-PE-CORE-NE80E-2_log.log</td><td>10:22 AM 8/1/2014</td><td>89,273,892</td><td>Not Yet</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>7</td><td>TRG-PE-CORE-NE80E-1-2014-11.log</td><td>10:22 AM 8/1/2014</td><td>100,012</td><td>80% Done</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>8</td><td>SALALAH-PE-CORE-NE80E-2-log.log</td><td>11:12 AM 8/3/2014</td><td>102,232</td><td>Running</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>9</td><td>QURUM-PE-CORE-NE80E-2_Log.log</td><td>10:22 AM 8/1/2014</td><td>736,837</td><td>Not Yet</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>10</td><td>TCC-PE-CORE-NE80E-1_log.log</td><td>14:22 AM 1/1/2015</td><td>1,817,363</td><td>60% Done</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>11</td><td>SEEB-PE-CORE-NE80E-2_Log.log</td><td>15:22 AM 2/2/2015</td><td>3,827,438</td><td>Running</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>12</td><td>SUWAIQ-PE-CORE-NE80E-2_log.log</td><td>10:22 AM 8/1/2014</td><td>89,273,892</td><td>Not Yet</td></tr>
+
+    </tbody>
+</table>
+
+
+<form role="form">
+    <div class="col-lg-3">
+    <button id="btn_plot" type="submit" class="btn btn-primary">Show Source</button>
+    </div>
+    <div class="col-lg-3">
+    <button id="btn_plot" type="submit" class="btn btn-primary">Download</button>
+    </div>
+    <div class="col-lg-3">
+    <button id="btn_plot" type="submit" class="btn btn-danger">Start Extract</button>
+    </div>
+
+</form>
+</div>
+</div> <!-- panel-default -->
+
+            </div>
+            <div class="col-lg-6" style="padding:20px 10px;">
+
+<div class="panel panel-default">
+<div class="panel-heading">Logs</div>
+<div class="panel-body">
+
+<table id="data" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>#Line</th>
+            <th>Log</th>
+        </tr>
+    </thead>
+    <tbody id="logs_table">
+    <tr><td>1</td><td>Down. (SlotNumber=4, Discriminator=9651, Diagnostic=NeighborDown, Applications=LSPV, ProcessPST=False, BindInterfaceName=None, InterfacePhysicalState=None, InterfaceProtocolState=None)</td></tr>
+    <tr><td>2</td><td>Nov 17 2014 15:25:49-04:00 QURUM-PE-CORE-NE80E-2 %%01BFD/4/STACHG_TODWN(l)[1037299]:Slot=4;BFD session changed to Down. (SlotNumber=4, Discriminator=9455, Diagnostic=(Receive AdminDown), Applications=LSPV, ProcessPST=False, BindInterfaceName=None, InterfacePhysicalState=None, InterfaceProtocolState=None)</td></tr>
+    <tr><td>3</td><td>Nov 17 2014 15:25:49-04:00 QURUM-PE-CORE-NE80E-2 %%01BFD/5/DELSESS(l)[1037315]:The BFD session was deleted. (Discriminator=10129, Result=successfully, Applications=LSPV, BindIFName=None, SourceIp=62.231.255.99, PeerIp=62.231.255.101)</td></tr>
+    <tr><td>4</td><td>Nov 17 2014 15:25:51-04:00 QURUM-PE-CORE-NE80E-2 ISIS/2/SEQNUM_SKIP:OID 1.3.6.1.3.37.2.0.8 ISIS received a self-originated LSP with a greater sequence number. (sysInstance=100, sysInstanceofLevel=100, sysLevel=2, sysInstanceofCircIfIndex=100, circIndex=36, sysInstanceofPduLspId=100, IfIndex=36, CircIfIndex=469762305, PduLspId=[00.00.02.55.00.99.00.01 (hex)], IfName=GE7/0/0)</td></tr>
+    <tr><td>5</td><td>Nov 17 2014 15:25:51-04:00 QURUM-PE-CORE-NE80E-2 %%01BFD/4/STACHG_TOUP(l)[1037350]:Slot=4;BFD session changed to Up. (SlotNumber=4, Discriminator=9900, FormerStatus=Down, Applications=LSPV, BindInterfaceName=None, ProcessPST=False)</td></tr>
+    <tr><td>6</td><td>
+    Nov 17 2014 15:26:09-04:00 QURUM-PE-CORE-NE80E-2 BFD/6/BFD_UP_TRAP:OID 1.3.6.1.4.1.2011.5.25.38.3.2 Session changes to UP. (Index=116106, ConfigurationName=dyn_10151, PeerIp=62.231.255.85, BindIfIndex=1541, BindIfName=Tunnel0/0/6, Diagnosis=0, BindVrfIndex=0, BindVpnName="", SessionType=2, DefaultIp=1, BindType=9, StaticLspName="", PwSecondary=0, NextHop=62.231.255.99, VcId=0, VsiName="", VsiPeerAddress=0.0.0.0, DiscrAuto=2, PeerIpv6=::, Ipv6NextHop=::)</td></tr>
+    <tr><td>7</td><td>Nov 17 2014 15:26:14-04:00 QURUM-PE-CORE-NE80E-2 LSPM/4/MPLSXCDOWN:OID 1.3.6.1.2.1.10.166.2.0.2 LSP went Down. (BeginLspIndex=111650.-1.111635, EndLspIndex=111651.111628.111635)</td></tr>
+    <tr><td>8</td><td>Nov 17 2014 15:25:55-04:00 QURUM-PE-CORE-NE80E-2 %%01BFD/4/STACHG_TOUP(l)[1037564]:Slot=4;BFD session changed to Up. (SlotNumber=4, Discriminator=9917, FormerStatus=Init, Applications=LSPM | LDP | L2VPN | OAM_MANAGER, BindInterfaceName=None, ProcessPST=True)</td></tr>
+    <tr><td>9</td><td>Nov 17 2014 15:25:57-04:00 QURUM-PE-CORE-NE80E-2 %%01L2V/5/VPLSVSI_DWN(l)[1037604]:The status of the VPLS VSI turned DOWN. (VsiName=LOCAL-VPLS-Khuwair-MSAN-194, Reason=Tunnel was Down)</td></tr>
+    <tr><td>10</td><td>Nov 17 2014 15:25:58-04:00 QURUM-PE-CORE-NE80E-2 %%01L2V/5/VPLSVC_DWN_ME(l)[1037753]:The status of the VPLS VC turned DOWN. (VsiName=LOCAL-VPLS-QURM-LL-93, RemoteIp=62.231.255.93, PwId=93, Reason=Tunnel was Down, SysUpTime=4047824461)
+    </td></tr>
+    <tr><td>11</td><td>Nov 17 2014 15:30:51-04:00 WATTYAH-PE-CORE-NE80E-1 %%01BFD/5/DELSESS(l)[58355]:The BFD session was deleted. (Discriminator=10901, Result=successfully, Applications=LSPV, BindIFName=None, SourceIp=62.231.255.100, PeerIp=62.231.255.99)</td></tr>
+    <tr><td>12</td><td>Nov 17 2014 20:02:41-04:00 OTB-PE-CORE-NE80E-1 %%01LDP/6/RCVFTMSG(l):Received FT message from peer 62.231.255.96.</td></tr>
+    </tbody>
+</table>
+
+
+</div>
+</div> <!-- panel-default -->
+
+
+            </div> <!-- col -->
+            </div>  <!-- row -->
+            <div class="row">
+
+
+
+
+<div class="panel panel-default">
+<div class="panel-heading">Regular Expressions</div>
+<div class="panel-body">
+            <div class="col-lg-4" style="padding:20px 0px;">
+
+
+<from role="form">
+    <div class="form-group">
+        <label>File input</label>
+        <input type="file">
+    </div>
+    <div class="form-group" style="padding:20px 0px;">
+    <div class="row">
+        <div class="col-lg-4">
+                <button id="btn_plot" type="submit" class="btn btn-primary">Upload Configure</button>
+        </div>
+        <div class="col-lg-4">
+                <button id="btn_plot" type="submit" class="btn btn-primary">Download Configure</button>
+        </div>
+    </div>
+    </div>
+</form>
+
+
+            </div>
+            <div class="col-lg-8" style="padding:20px 0px;">
+<div class="form-group">
+<label>Current Configure</label>
+<textarea id="regx_content" class="form-control" rows="3" style="margin: 0px -1px 0px 0px; height: 226px; width:100%;"></textarea>
+</div>
+
+            </div>
+
+</div>
+</div><!-- pabel -->
+            </div> <!-- row -->
+
+            </div> <!-- "regex_panel" -->
+            <div class="row" id="cluster_panel">
+                
+               <h1>cluster</h1> 
+            </div>
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script src="https://cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+    <script src="../dist/js/dataTables.bootstrap.js"></script>
+
+<script>
+$(document).ready(function(){
+
+    $("#regex_panel").show();
+    $("#cluster_panel").hide();
+
+    $("#regex_p").click(function(){
+        $("#regex_p").addClass("active");
+        $("#cluster_p").removeClass("active");
+        $("#regex_panel").show();
+        $("#cluster_panel").hide();
+    });
+    $("#cluster_p").click(function(){
+        $("#cluster_p").addClass("active");
+        $("#regex_p").removeClass("active");
+        $("#regex_panel").hide();
+        $("#cluster_panel").show();
+    });
+    
+    $('#data_source_list').dataTable({
+        "ordering": false,
+        "searching": false,
+        "pageLength": 6,
+    });
+    
+    $('#data').dataTable({
+        "ordering": false,
+        "searching": false,
+        "pageLength": 3,
+    });
+    
+
+    var host = "http://131.94.128.175";
+    var port = "8000";
+    var url = host+":"+port+"/main/get_regx";
+    $.getJSON( url ,function(result){
+        
+        $('#regx_content').val(result["value"]);
+    });
+
+
+});
+</script>
+
+</body>
+
+</html>

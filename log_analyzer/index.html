@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event-log Viz</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+    <!--<![endif]-->
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="css/layouts/side-menu.css">
+    <!--<![endif]--> 
+    <link rel="stylesheet" href="css/nv.d3.css">
+    <link rel="stylesheet" href="css/event_log_viz.css">
+</head>
+
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu pure-menu-open">
+            <a class="pure-menu-heading" href="#">Event Log Viz</a>
+            <ul>
+                <li><a href="#" class="menu-item menu-selected">Overview Dashboard</a></li>
+                <li><a href="#" class="menu-item">Scatter Plot</a></li>
+                <!--<li><a href="#" class="menu-item">more</a></li>-->
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+    </div>
+</div>
+<script src="js/ui.js"></script>
+<script type="text/javascript" src="js/lib/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="js/lib/d3.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script type="text/javascript" src="js/lib/nv.d3.js"></script>
+<script type="text/javascript" src="js/filter_tag.js"></script>
+<script type="text/javascript" src="js/data_manager.js"></script>
+<script type="text/javascript" src="js/chart_manager.js"></script>
+<script type="text/javascript" src="js/sys_dashboard.js"></script>
+<script type="text/javascript" src="js/scatter_plot_matrix.js"></script>
+<script type="text/javascript" src="js/scatter_plot_dashboard.js"></script>
+<script type="text/javascript" src="js/event_log_viz_app.js"></script>
+</body>
+</html>
+

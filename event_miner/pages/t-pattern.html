@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log Analyzer</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../dist/css/jquery.datetimepicker.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script type="text/javascript" src="../vis/vis.js"></script>
+  <link href="../vis/vis.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+
+    #frame {
+      width: 100%;
+      height: 99%;
+    }
+    #frame td {
+      padding: 10px;
+      height: 100%;
+    }
+    #error {
+      color: red;
+    }
+
+    #data {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d3d3d3;
+    }
+
+    #mynetwork {
+      border: 1px solid lightgray;
+    }
+    textarea.example {
+      display: none;
+    }
+
+
+  </style>
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Log Analyzer v1.0</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> DataSource</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-magic fa-fw"></i> Event Extraction</a>
+                        </li> 
+
+
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Event Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Event Mining<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="event_summarization.html"> Event Summarization</a>
+                                </li>
+                                <li>
+                                    <a href="t-pattern.html"> t-Pattern Mining</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html"> Temporal Log Mining</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html"> Rare Event Root Cause Mining</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-paw fa-fw"></i> Multiresolution Retrieval</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Dynamic Query Form</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+            </nav>
+
+        <div id="page-wrapper">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">t-Pattern Mining</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="row">
+            <div class="col-lg-4">
+                <div class="panel panel-default" style="height:300px" >
+                    <div class="panel-heading">
+                        Data Source
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Data Source</th>
+                                        <th>Host</td>
+                                        <td>Time Range</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataSourceTable">
+                                    <tr>
+                                        <td>0</td>
+                                        <td>Huawei Log</td>
+                                        <td>All</td>
+                                        <td>3/3/2014 - 3/3/2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>IBM Log</td>
+                                        <td>All</td>
+                                        <td>3/10/2014 - 1/12/2014</td>
+                                    </tr>                                     
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default" style="height:300px">
+                  <div class="panel-heading">t-Patterns</div>
+                  <div class="panel-body">
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Start Time</th>
+            <th>Running Time</th>
+        </tr>
+    </thead>
+    <tbody id="patterns">
+    </tbody>
+</table>
+</div>
+<button id="btn_plot" type="submit" class="btn btn-primary">Plot Pattern</button>
+                  </div>
+                  </div> <!-- panel -->
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default" style="height:300px">
+                  <div class="panel-heading">Start New Mining Process</div>
+                  <div class="panel-body">
+<form class="form-horizontal" style="padding-top: 25px;">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Start Time:</label>
+        <div class="col-sm-8">
+        <input id="datetimepicker1" type="text" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">End Time:</label>
+        <div class="col-sm-8">
+        <input id="datetimepicker2" type="text" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">delta:</label>
+        <div class="col-sm-8">
+        <input id="delta" type="text" >
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-8">
+        <button type="submit" class="btn btn-primary">Start Mining</button>
+      </div>
+    </div>
+</form>
+                  </div>
+                  </div> <!-- panel -->
+            </div>
+
+            </div> <!-- row -->
+
+
+            <div class="row" style="height: 100%;">
+              <div class="col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Nodes
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" >
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Log Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="nodeTable">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+ 
+              <div class= "col-lg-9" id="mynetwork" style="border-style: solid;border-width: 5px;" ></div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script src="../dist/js/jquery.datetimepicker.js"></script>
+
+    <!-- Flot Charts JavaScript -->
+
+<script type="text/javascript">
+    var nodes = null;
+    var edges = null;
+    var network = null;
+    var nodesData = null;
+
+    function destroy() {
+      if (network !== null) {
+        network.destroy();
+        network = null;
+      }
+    }
+
+$("#btn_plot").click(function(){
+
+
+    plot_pattern();
+});
+$(function(){
+
+    $('#datetimepicker1').datetimepicker( );
+    $('#datetimepicker2').datetimepicker( );
+
+    var cw = $('#mynetwork').width();
+    $('#mynetwork').css({'height':cw+'px'});
+
+
+
+    url2 = "http://131.94.128.175:8000/main/t_pattern_logTypes/";
+    $.getJSON( url2, function(result){
+        $logType = $("#nodeTable");
+        for(var i=0; i<result.length;i++){
+            $logType.append("<tr><td>" + result[i][0] + "</td><td>" + result[i][1]);
+        }
+    });
+    
+    url = "http://131.94.128.175:8000/main/t_pattern_paterns";
+    $.getJSON( url, function(result){
+        $patterns = $("#patterns");
+        for(var i=0; i<result.length;i++){
+            var str = "<tr><td class=\"bs-checkbox\"><input name=\"radioName\" type=\"radio\"></td>";
+            $patterns.append(str+"<td>"+result[i]["id"]+"</td><td>"+result[i]["name"]+"</td><td>"+result[i]["start_time"]+"</td><td>"+result[i]["running_time"]+"</td></tr>");
+            
+        }
+
+    });
+
+    plot_pattern();
+
+});
+
+function plot_pattern(){
+    nodes = new vis.DataSet();
+    edges = new vis.DataSet();
+    nodesData = [];
+    nodes.clear();
+    edges.clear();
+
+    destroy();
+
+    // create a network
+    url = "http://131.94.128.175:8000/main/t_pattern_nodes_edges/";
+    $.getJSON( url ,function(result){
+        nodesData = result[0];
+        nodes.add(nodesData);
+        edges.add(result[1]);
+
+        var container = document.getElementById('mynetwork');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {
+            nodes: {
+                shape: 'dot',
+                radiusMin: 10,
+                radiusMax: 30,
+                fontSize: 12,
+                fontFace: "Tahoma"
+            },
+            edges: {
+                width: 0.15,
+                inheritColor: "from"
+            },
+            tooltip: {
+                delay: 200,
+                fontSize: 12,
+                color: {
+                    background: "#fff"
+                }
+            },
+            smoothCurves: {dynamic:false, type: "continuous"},
+            stabilize: false,
+            physics: {barnesHut: {gravitationalConstant: 0, centralGravity: 0, springConstant: 0}},
+            hideEdgesOnDrag: true
+        };
+
+        network = new vis.Network(container, data, options);
+        network.on("click",onClick);
+
+    });
+
+}
+function onClick(selectedItems) {
+    var nodeId;
+    var degrees = 2;
+    // we get all data from the dataset once to avoid updating multiple times.
+    var allNodes = nodes.get({returnType:"Object"});
+    if (selectedItems.nodes.length == 0) {
+        // restore on unselect
+        for (nodeId in allNodes) {
+            if (allNodes.hasOwnProperty(nodeId)) {
+                allNodes[nodeId].color = undefined;
+                if (allNodes[nodeId].oldLabel !== undefined) {
+                    allNodes[nodeId].label = allNodes[nodeId].oldLabel;
+                    allNodes[nodeId].oldLabel = undefined;
+                }
+                allNodes[nodeId]['levelOfSeperation'] = undefined;
+                allNodes[nodeId]['inConnectionList'] = undefined;
+            }
+        }
+    }
+    else {
+        var allEdges = edges.get();
+
+        // we clear the level of separation in all nodes.
+        clearLevelOfSeperation(allNodes);
+
+        // we will now start to collect all the connected nodes we want to highlight.
+        var connectedNodes = selectedItems.nodes;
+
+        // we can store them into levels of separation and we could then later use this to define a color per level
+        // any data can be added to a node, this is just stored in the nodeObject.
+        storeLevelOfSeperation(connectedNodes,0, allNodes);
+        for (var i = 1; i < degrees + 1; i++) {
+            appendConnectedNodes(connectedNodes, allEdges);
+            storeLevelOfSeperation(connectedNodes, i, allNodes);
+        }
+        for (nodeId in allNodes) {
+            if (allNodes.hasOwnProperty(nodeId)) {
+                if (allNodes[nodeId]['inConnectionList'] == true) {
+                    if (allNodes[nodeId]['levelOfSeperation'] !== undefined) {
+                        if (allNodes[nodeId]['levelOfSeperation'] >= 2) {
+                            allNodes[nodeId].color = 'rgba(150,150,150,0.75)';
+                        }
+                        else {
+                            allNodes[nodeId].color = undefined;
+                        }
+                    }
+                    else {
+                        allNodes[nodeId].color = undefined;
+                    }
+                    if (allNodes[nodeId].oldLabel !== undefined) {
+                        allNodes[nodeId].label = allNodes[nodeId].oldLabel;
+                        allNodes[nodeId].oldLabel = undefined;
+                    }
+                }
+                else {
+                    allNodes[nodeId].color = 'rgba(200,200,200,0.5)';
+                    if (allNodes[nodeId].oldLabel === undefined) {
+                        allNodes[nodeId].oldLabel = allNodes[nodeId].label;
+                        allNodes[nodeId].label = "";
+                    }
+                }
+            }
+        }
+    }
+    var updateArray = [];
+    for (nodeId in allNodes) {
+        if (allNodes.hasOwnProperty(nodeId)) {
+            updateArray.push(allNodes[nodeId]);
+        }
+    }
+    nodes.update(updateArray);
+}
+
+
+/**
+ * update the allNodes object with the level of separation.
+ * Arrays are passed by reference, we do not need to return them because we are working in the same object.
+ */
+function storeLevelOfSeperation(connectedNodes, level, allNodes) {
+    for (var i = 0; i < connectedNodes.length; i++) {
+        var nodeId = connectedNodes[i];
+        if (allNodes[nodeId]['levelOfSeperation'] === undefined) {
+            allNodes[nodeId]['levelOfSeperation'] = level;
+        }
+        allNodes[nodeId]['inConnectionList'] = true;
+    }
+}
+
+function clearLevelOfSeperation(allNodes) {
+    for (var nodeId in allNodes) {
+        if (allNodes.hasOwnProperty(nodeId)) {
+            allNodes[nodeId]['levelOfSeperation'] = undefined;
+            allNodes[nodeId]['inConnectionList'] = undefined;
+        }
+    }
+}
+
+/**
+ * Add the connected nodes to the list of nodes we already have
+ *
+ *
+ */
+function appendConnectedNodes(sourceNodes, allEdges) {
+    var tempSourceNodes = [];
+    // first we make a copy of the nodes so we do not extend the array we loop over.
+    for (var i = 0; i < sourceNodes.length; i++) {
+        tempSourceNodes.push(sourceNodes[i])
+    }
+
+    for (var i = 0; i < tempSourceNodes.length; i++) {
+        var nodeId = tempSourceNodes[i];
+        if (sourceNodes.indexOf(nodeId) == -1) {
+            sourceNodes.push(nodeId);
+        }
+        addUnique(getConnectedNodes(nodeId, allEdges),sourceNodes);
+    }
+    tempSourceNodes = null;
+}
+
+/**
+ * Join two arrays without duplicates
+ * @param fromArray
+ * @param toArray
+ */
+function addUnique(fromArray, toArray) {
+    for (var i = 0; i < fromArray.length; i++) {
+        if (toArray.indexOf(fromArray[i]) == -1) {
+            toArray.push(fromArray[i]);
+        }
+    }
+}
+
+/**
+ * Get a list of nodes that are connected to the supplied nodeId with edges.
+ * @param nodeId
+ * @returns {Array}
+ */
+function getConnectedNodes(nodeId, allEdges) {
+    var edgesArray = allEdges;
+    var connectedNodes = [];
+
+    for (var i = 0; i < edgesArray.length; i++) {
+        var edge = edgesArray[i];
+        if (edge.to == nodeId) {
+            connectedNodes.push(edge.from);
+        }
+        else if (edge.from == nodeId) {
+            connectedNodes.push(edge.to)
+        }
+    }
+    return connectedNodes;
+}
+
+redrawAll()
+
+</script>
+
+</body>
+
+</html>

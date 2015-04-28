@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log Analyzer</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../dist/css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../dist/css/timeline.css" rel="stylesheet">
+    <link href="../dist/multiselect/css/multi-select.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <link href="../dist/css/jquery.datetimepicker.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Log Analyzer v1.0</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> DataSource</a>
+                        </li>
+                        <li>
+                            <a href="event_extraction.html"><i class="fa fa-magic fa-fw"></i> Event Extraction</a>
+                        </li> 
+
+
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Event Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Event Mining<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="event_summarization.html"> Event Summarization</a>
+                                </li>
+                                <li>
+                                    <a href="t-pattern.html"> t-Pattern Mining</a>
+                                </li>
+                                <li>
+                                    <a href="http://54.200.13.59:8081/temporal-pattern/"> Temporal Lag Mining</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="multiresolution_retrieval.html"><i class="fa fa-paw fa-fw"></i> Multiresolution Retrieval</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Dynamic Query Form</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Multiresolution Retrieval</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            <div class="col-lg-4">
+<div class="panel panel-default" id="display_panel">
+<div class="panel-heading"> <label>  Display </label></div>
+<div class="panel-body">
+<form role="form">
+    <div class="form-group" style="padding:0px 0px 0px 20px;">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">Select/Unselect All
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">log_id
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">datetime
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">type_id
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">type_name
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked"  value="">source_id
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">source_name
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="">host_name
+            </label>
+        </div>
+
+    </div>
+
+</form>
+
+</div>
+</div> <!-- panel -->
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">Conditions</div>
+  <div class="panel-body">
+    <form>
+        <div class="form-group" style="padding:0px 0px 0px 0px;">
+            <div >
+                <label class="control-label">Start Time:</label>
+                <label class="control-label" style="padding:0px 0px 0px 117px;">End Time:</label>
+            </div>
+            <div>
+                <input id="datetimepicker1" type="text" >
+                &nbsp;&nbsp;
+                <input id="datetimepicker2" type="text" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Time Resolution</label>
+            <select class="form-control">
+                <option>1 seconds</option>
+                <option>10 seconds</option>
+                <option>20 seconds</option>
+                <option>30 seconds</option>
+                <option>1 minutes</option>
+                <option>10 minutes</option>
+                <option>20 minutes</option>
+                <option>30 minutes</option>
+                <option>1 hour</option>
+                <option>12 hours</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="padding:0px 0px 0px 0px;">
+            <label>Data Sources:</label>
+            <select multiple="" class="form-control" id="data_sources">
+            </select>
+        </div>
+        <div class="form-group" style="padding:0px 0px 0px 0px;">
+            <label>Data Types:</label>
+            <select multiple="" class="form-control" id="data_types">
+            </select>
+        </div>
+        <div class="form-group" style="padding:0px 0px 0px 0px;">
+            <label>Hosts:</label>
+            <select multiple="" class="form-control" id="hosts">
+            </select>
+        </div>
+
+        <div class="form-group" style="padding:0px 0px 0px 0px;">
+            <label class="control-label">Data Set Name:</label>
+            <input class="form-control" placeholder="Enter Data Set Name">
+        </div>
+
+        <div class="form-group" style="padding:0px 0px 0px 0px;">
+            <button type="button" class="btn btn-primary" id='query_logs'>Query Logs</button>
+            <button type="button" class="btn btn-primary">Save Data Sets</button>
+        </div>
+    </form>
+  </div> <!-- panel body-->
+  </div> <!-- panel -->
+</div> <!-- col-lg-3 -->
+            <div class="col-lg-8">
+
+            <div class="panel panel-default">
+<div class="panel-heading">Logs</div>
+<div class="panel-body">
+
+<table id="logs_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>log_id</th>
+            <th>datetime</th>
+            <th>type_name</th>
+            <th>source_name</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+</div> <!-- panel-default -->
+
+
+<div class="panel panel-default">
+<div class="panel-heading">Log Detail</div>
+<div class="panel-body">
+    <p id="log_raw">Nov 17 2014 14:35:02-04:00 Sohar-PE-CORE-NE80E-1 %%01BFD/6/CRTSESS(l):The BFD session has been created successfully. (Discriminator=10949, ConfigurationName=dyn_10949, Applications=LSPM | LDP | L2VPN | OAM_MANAGER, PeerIp=62.231.255.91, SessionType=D_LDP_LSP, BindIFName=Tunnel0/0/18, BindVpnName=, SourceIp=62.231.255.242)</p>
+</div>
+</div> <!-- panel-default -->
+
+
+
+            </div>
+ 
+            </div> <!-- row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+    <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <script src="../dist/js/jquery.datetimepicker.js"></script>
+    <script src="../dist/multiselect/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script>
+    <script src="../dist/js/dataTables.bootstrap.js"></script> 
+    <!-- DataTables -->
+<script type="text/javascript">
+$(function() {
+    var host = "http://131.94.128.175";
+    var port = "8000";
+    $('#datetimepicker1').datetimepicker({
+        format:'YmdHis'
+    });
+//    $('#datetimepicker1').attr('disabled','true');
+    $('#datetimepicker2').datetimepicker({
+        format:'YmdHis'
+    } );
+
+    $('#data_sources').multiSelect();
+    $('#data_types').multiSelect();
+    $('#hosts').multiSelect();
+    url = 'http://131.94.128.175:8000/main/get_datasets';
+    $.getJSON(url, function(result){
+        $dataSources = $('#data_sources');
+        for( var i=0; i<result.length;i++){
+            $dataSources.multiSelect('addOption', { value: result[i]["sid"], text: result[i]["sid"] + "   " +result[i]["sname"], index: 0 });;
+        }
+    });
+
+    var data = [
+    {
+        "log_id":       "Tiger Nixon",
+        "datetime":   "System Architect",
+        "type_name":     "$3,120",
+        "source_name": "2011/04/25",
+        "office":     "Edinburgh",
+        "extn":       "5421"
+    },
+    {
+        "log_id":       "Garrett Winters",
+        "datetime":   "Director",
+        "type_name":     "$5,300",
+        "source_name:": "2011/07/25",
+        "office":     "Edinburgh",
+        "extn":       "8422"
+    }
+    ];
+
+
+
+    url = host + ":" + port + '/main/log_type/';
+    $.getJSON(url, function(result){
+        $dataTypes = $('#data_types');
+        for( var i=0; i<result.length;i++){
+            $dataTypes.multiSelect('addOption', 
+                { value:i, text:result[i]["typeName"], index: 0 }
+            );
+
+        } 
+    });
+    url = host + ":" + port + '/main/host_id_map/';
+    $.getJSON(url, function(result){
+        $Hosts = $('#hosts');
+        for( var i=0; i<result.length;i++){
+            $Hosts.multiSelect('addOption', 
+                { value:result[i][0], text:result[i][1], index: 0 }
+            );
+
+        } 
+    });
+    url = host+":"+port+"/main/get_events/-1/-1/-1/16,/";
+    $.getJSON( url ,function(result){
+        $logTable = $('#logs_table');
+        for(var i=0; i<result.length; i++ ){
+            var r = result[i];
+            $logTable.append("<tr><td>" + r["log_id"] + "</td><td>"+r["datetime"]+
+                                "</td><td>" + r["type_name"] + "</td><td>" + r["source_name"] +
+                                "</td></tr>");
+
+        }
+        var table = $('#logs_table').dataTable( );
+    });
+
+    $('#query_logs').click(function(){
+
+        start = $('#datetimepicker1').val();
+        end = $('#datetimepicker2').val();
+
+        if( start =="" )  start = "-1";
+      
+        if( end =="" ){
+            end = "-1"
+        }
+        var dataSources = "";
+        $('#data_sources option:selected').each(function(){
+            dataSources += this.value + ",";
+//            console.log(this.value);
+
+        });
+
+        url = host+":"+port+"/main/get_events/"+start+"/"+end+"/-1/";
+        if( dataSources != ""){
+            url += dataSources + "/";
+        }
+        $.getJSON( url ,function(result){
+            $logTable = $('#logs_table');
+            for(var i=0; i<result.length; i++ ){
+                var r = result[i];
+                $logTable.append("<tr><td>" + r["log_id"] + "</td><td>"+r["datetime"]+
+                                "</td><td>" + r["type_name"] + "</td><td>" + r["source_name"] +
+                                "</td><td>" + r["host_name"] +
+                                "</td></tr>");
+            }
+
+        });
+
+            
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>

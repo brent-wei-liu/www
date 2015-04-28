@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log Analyzer</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../dist/css/timeline.css" rel="stylesheet">
+    <link href="../dist/multiselect/css/multi-select.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <link href="../dist/css/jquery.datetimepicker.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Log Analyzer v1.0</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> DataSource</a>
+                        </li>
+                        <li>
+                            <a href="event_extraction.html"><i class="fa fa-magic fa-fw"></i> Event Extraction</a>
+                        </li> 
+
+
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Event Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Event Mining<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="event_summarization.html"> Event Summarization</a>
+                                </li>
+                                <li>
+                                    <a href="t-pattern.html"> t-Pattern Mining</a>
+                                </li>
+                                <li>
+                                    <a href="http://54.200.13.59:8081/temporal-pattern/"> Temporal Lag Mining</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="multiresolution_retrieval.html"><i class="fa fa-paw fa-fw"></i> Multiresolution Retrieval</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Dynamic Query Form</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dynamic Query Form</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                  <div class="panel-heading"><label>Data Sets Selector</label></div>
+                  <div class="panel-body">
+                        <div class="row" style="padding: 20px;">
+<h4>More Display Attributes</h4>
+<ul id="display_attributes">
+    <a href="#"><li>log_id</li></a>
+    <a href="#"><li>datetime</li></a>
+    <a href="#"><li>host_id</li></a>
+    <a href="#"><li>host_name</li></a>
+    <a href="#"><li>type_id</li></a>
+    <a href="#"><li>type_name</li></a>
+    <a href="#"><li>source_id</li></a>
+    <a href="#"><li>source_name</li></a>
+</ul>
+
+<h4>More Conditions</h4>
+<ul id="conditions">
+    <a href="#"><li>datetime >= '201409030000'</li></a>
+    <a href="#"><li>datetime < '201409040000'</li></a>
+    <a href="#"><li>datetime >= '201509030000'</li></a>
+    <a href="#"><li>datetime >= '201409020000'</li></a>
+    <a href="#"><li>datetime < '201510030000'</li></a>
+    <a href="#"><li>type_id in (2, 3, 4, 73)</li></a>
+    <a href="#"><li>source_id in (2, 3 )</li></a>
+</ul>
+
+                        </div> <!-- row -->
+                        <div class="row" style="padding: 20px;">
+                              <div class="col-md-3">
+                              <button type="button" class="btn btn-primary" id='showDash'>Submit Query</button>
+                              </div>
+                        </div> <!-- row -->
+
+                  </div> <!-- panel body-->
+                  </div> <!-- panel -->
+            </div> <!-- col-lg-3 -->
+
+           <div class="col-lg-8">
+           <div class="row" style="padding: 0px 20px 0px 20px;">
+<div class="col-md-4">
+<div class="panel panel-default" id="display_panel">
+<div class="panel-heading"> <label>  Display </label></div>
+<div class="panel-body">
+<form role="form">
+    <div class="form-group" style="padding:0px 0px 0px 20px;">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="">log_id
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="">datetime
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="">source_name
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="">type_name
+            </label>
+        </div>
+    </div>
+
+</form>
+    <div style="padding:10px 0px 0px 20px;">
+            <button type="button" class="btn btn-outline btn-warning btn-sm" >Delete Setection</button>
+    </div>
+
+</div> 
+</div> <!-- panel -->
+</div>
+
+<div class="col-md-6">
+<div class="panel panel-default" id="condition_panel" >
+<div class="panel-heading"><label> Conditions </label></div>
+<!-- /.panel-heading -->
+<div class="panel-body">
+<form>
+
+
+
+
+<div class="form-inline form-group">
+<input type="text" class="form-control" placeholder="attribute" value="datetime" style="height:28px;width:100px;"/>
+<select >
+    <option>></option>
+    <option>>=</option>
+    <option><</option>
+    <option><=</option>
+    <option>=</option>
+    <option>in</option>
+    <option>like</option>
+</select>
+<input type="text" class="form-control" placeholder="value" value="20141213000"style="height:28px;width:130px;"/>
+</div>
+    
+
+
+<div class="form-inline form-group">
+<input type="text" class="form-control" placeholder="attribute" value="datetime" style="height:28px;width:100px;"/>
+<select >
+    <option>></option>
+    <option>>=</option>
+    <option><</option>
+    <option><=</option>
+    <option>=</option>
+    <option>in</option>
+    <option>like</option>
+</select>
+<input type="text" class="form-control" placeholder="value" value="20141213000"style="height:28px;width:130px;"/>
+</div>
+
+<div class="form-inline form-group">
+<input type="text" class="form-control" placeholder="attribute" value="datetime" style="height:28px;width:100px;"/>
+<select >
+    <option>></option>
+    <option>>=</option>
+    <option><</option>
+    <option><=</option>
+    <option>=</option>
+    <option>in</option>
+    <option>like</option>
+</select>
+<input type="text" class="form-control" placeholder="value" value="20141213000"style="height:28px;width:130px;"/>
+</div>
+    
+
+<div class="form-inline form-group">
+<input type="text" class="form-control" placeholder="attribute" value="datetime" style="height:28px;width:100px;"/>
+<select >
+    <option>></option>
+    <option>>=</option>
+    <option><</option>
+    <option><=</option>
+    <option>=</option>
+    <option>in</option>
+    <option>like</option>
+</select>
+<input type="text" class="form-control" placeholder="value" value="20141213000"style="height:28px;width:130px;"/>
+</div>
+
+
+
+
+
+</form>
+</div> 
+</div> <!-- panel -->
+</div>
+
+           </div> <!-- row -->
+           <div class="row" style="padding: 20px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><label> Query Results </label>  </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+<div class="col-sm-6">
+<div class="dataTables_length" id="dataTables-example_length">
+<label>Show <select name="dataTables-example_length" aria-controls="dataTables-example" class="form-control input-sm">
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+</select> entries</label>
+</div>
+</div>
+<div class="col-sm-6">
+<div id="dataTables-example_filter" class="dataTables_filter">
+<label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example"></label>
+</div>
+</div>
+                                </div> <!-- row -->
+                                <div class="row">
+<div class="col-sm-12">
+<table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info">
+<thead>
+<tr role="row">
+    <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 284px;">
+    log_id
+    </th>
+    <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 340px;">
+    datetime
+    </th>
+    <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 311px;">
+    source_name
+    </th>
+    <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 248px;">
+    type_name
+    </th>
+</tr>
+</thead>
+
+<tbody>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2342</td>
+        <td>'2012-10-13 18:50:52'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2343</td>
+        <td>'2012-10-13 18:50:53'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2344</td>
+        <td>'2012-10-13 18:50:54'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2345</td>
+        <td>'2012-10-13 18:50:55'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2346</td>
+        <td>'2012-10-13 18:50:56'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2347</td>
+        <td>'2012-10-13 18:50:57'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2348</td>
+        <td>'2012-10-13 18:50:58'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2349</td>
+        <td>'2012-10-13 18:50:59'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2350</td>
+        <td>'2012-10-13 18:51:00'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+
+    <tr class="gradeA even" role="row">
+        <td class="sorting_1">2351</td>
+        <td>'2012-10-13 18:50:52'</td>
+        <td>'log_wei_with_faults.log'</td>
+        <td class="center">'session_change'</td>
+    </tr>
+
+</tbody>
+</table>
+</div>
+                            </div> <!-- row -->
+                            <div class="row">
+<div class="col-sm-6">
+<div class="dataTables_info" id="dataTables-example_info" role="status" aria-live="polite">
+Showing 1 to 10 of 57 entries
+</div>
+</div>
+
+<div class="col-sm-6">
+<div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
+<ul class="pagination">
+<li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+    <a href="#">Previous</a>
+</li>
+<li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+    <a href="#">1</a>
+</li>
+<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+    <a href="#">2</a>
+</li>
+<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+    <a href="#">3</a>
+</li>
+<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+    <a href="#">4</a>
+</li>
+<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+    <a href="#">5</a>
+</li>
+<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+    <a href="#">6</a>
+</li>
+<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+    <a href="#">Next</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+                            </div> <!-- row -->
+                            </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div> <!-- row -->
+                </div> <!-- col lg 8 -->
+ 
+            </div> <!-- row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <script src="../dist/js/jquery.datetimepicker.js"></script>
+    <script src="../dist/multiselect/js/jquery.multi-select.js"></script>
+<script type="text/javascript">
+$(function() {
+    $cond = $('#condition_panel');
+    $disp = $('#display_panel');
+    if($cond.height() < $disp.height()){
+        $cond.height( $disp.height() ); 
+    }else{
+        $disp.height( $cond.height() ); 
+    }
+    $('#datetimepicker1').datetimepicker({
+        format:'YmdHis'
+    });
+//    $('#datetimepicker1').attr('disabled','true');
+    $('#datetimepicker2').datetimepicker({
+        format:'YmdHis'
+    } );
+
+    $('#data_sources').multiSelect();
+    url = 'http://131.94.128.175:8000/main/get_datasets';
+    $.getJSON(url, function(result){
+        $dataSources = $('#data_sources');
+        for( var i=0; i<result.length;i++){
+            $dataSources.multiSelect('addOption', { value: result[i]["sid"], text: result[i]["sid"] + "   " +result[i]["sname"], index: 0 });;
+        }
+    });
+
+
+    $('#showDash').click(function(){
+        start = $('#datetimepicker1').val();
+        end = $('#datetimepicker2').val();
+        if( start =="" ){
+            alert("Please input start time!");
+            return;
+        }
+        if( end =="" ){
+            alert("Please input end time!");
+        }
+        var dataSources = "";
+        $('#data_sources option:selected').each(function(){
+            dataSources += this.value + ",";
+//            console.log(this.value);
+            
+        });
+         
+        url = "http://131.94.128.175:8000/main/date_count/"+ start +"/"+ end +"/";
+        if( dataSources != ""){
+            url += dataSources + "/";
+        }
+        $.getJSON( url ,function(data){
+            logCountChart.setData( data );
+        });
+
+//        logCountChart.setData( [] );
+    });
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log Analyzer</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script type="text/javascript" src="../vis/vis.js"></script>
+  <link href="../vis/vis.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+
+    #frame {
+      width: 100%;
+      height: 99%;
+    }
+    #frame td {
+      padding: 10px;
+      height: 100%;
+    }
+    #error {
+      color: red;
+    }
+
+    #data {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d3d3d3;
+    }
+
+    #mynetwork {
+      float: left;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d3d3d3;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    textarea.example {
+      display: none;
+    }
+  </style>
+
+
+</head>
+
+<body onload="drawExample('example1')">
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Log Analyzer v1.0</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> DataSource</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-magic fa-fw"></i> Event Extraction</a>
+                        </li> 
+
+
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Event Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Event Mining<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="panels-wells.html"> Event Summarization</a>
+                                </li>
+                                <li>
+                                    <a href="t-pattern.html"> t-Pattern Mining</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html"> Temporal Log Mining</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html"> Rare Event Root Cause Mining</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-paw fa-fw"></i> Multiresolution Retrieval</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Dynamic Query Form</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Event Summarization</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+            
+            <div class="col-lg-5">
+
+<div class="panel panel-default">
+<div class="panel-heading">Data Sets</div>
+<div class="panel-body">
+
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Start Time</th>
+            <th>Running Time</th>
+            <th>Staus</th>
+        </tr>
+    </thead>
+    <tbody id="patterns">
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>0</td><td>Huawei_log_1</td><td>11:22 AM 12/1/2015</td><td>10 hours</td><td>Ready</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>1</td><td>Huawei_log_2</td><td>11:22 AM 2/2/2015</td><td>2 hours</td><td>Running</td></tr>
+    <tr><td class="bs-checkbox"><input name="radioName" type="radio"></td><td>2</td><td>IBM_log_1</td><td>11:22 AM 2/2/2015</td><td>25 hours</td><td>Not Yet</td></tr>
+    </tbody>
+</table>
+</div>
+
+<form role="form">
+<div class="form-group">
+    <label>Select Pattern Type:</label>
+    <div class="checkbox">
+        <label> <input type="checkbox" value="">Coralation</label>
+    </div>
+    <div class="checkbox">
+        <label> <input type="checkbox" value="">Periodic</label>
+    </div>
+
+    </div>
+</from>
+<div class="row">
+    <div class="col-lg-3">
+    <button id="btn_plot" type="submit" class="btn btn-primary">Plot Pattern</button>
+    </div>
+    <div class="col-lg-3">
+    <button id="btn_plot" type="submit" class="btn btn-primary">Start Mining</button>
+    </div>
+    <div class="col-lg-3">
+    <button id="btn_plot" type="submit" class="btn btn-primary">Stop Mining</button>
+    </div>
+
+
+</div>
+</div>
+</div> <!-- panel-default -->
+
+            </div>
+            <div class="col-lg-7">
+
+<table id="frame">
+  <col width="30%">
+  <col width="70%">
+  <tr>
+    <td colspan="2" style="height: 50px;">
+      <div>
+        <a href="javascript: drawExample('example1')">example 1</a>
+        <a href="javascript: drawExample('example2')">example 2</a>
+        <a href="javascript: drawExample('example3')">example 3</a>
+      </div>
+      <div>
+        <br>
+        <button id="draw">Draw</button>
+        <span id="error"></span>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <textarea id="data"></textarea>
+    </td>
+    <td>
+      <div id="mynetwork" style="height: 700px;"></div>
+    </td>
+  </tr>
+</table>
+
+            </div> <!-- col -->
+            </div> <!-- row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+<script type="text/javascript">
+  var network = null;
+  var data = null;
+
+  var btnDraw = document.getElementById('draw');
+  var txtData = document.getElementById('data');
+  var txtError = document.getElementById('error');
+  btnDraw.onclick = draw;
+
+  // resize the network when window resizes
+  window.onresize = function () {
+    network.redraw()
+  };
+
+  function destroy() {
+    if (network !== null) {
+      network.destroy();
+      network = null;
+    }
+  }
+
+  // parse and draw the data
+  function draw () {
+    destroy();
+    try {
+      txtError.innerHTML = '';
+
+      // Provide a string with data in DOT language
+      data = {
+        dot: txtData.value
+      };
+
+      // create a network
+      var container = document.getElementById('mynetwork');
+      var options = {};
+      network = new vis.Network(container, data, options);
+    }
+    catch (err) {
+      // set the cursor at the position where the error occurred
+      var match = /\(char (.*)\)/.exec(err);
+      if (match) {
+        var pos = Number(match[1]);
+        if(txtData.setSelectionRange) {
+          txtData.focus();
+          txtData.setSelectionRange(pos, pos);
+        }
+      }
+
+      // show an error message
+      txtError.innerHTML =  err.toString();
+    }
+  }
+
+  /**
+   * Draw an example
+   * @param {String} id HTML id of the textarea containing the example code
+   */
+  function drawExample(id) {
+    txtData.value = document.getElementById(id).value;
+    draw();
+  }
+</script>
+
+<textarea id="example1" class="example">
+  digraph {
+  node [shape=circle fontSize=16]
+  edge [length=100, color=gray, fontColor=black]
+
+  A -> A[label=0.5];
+  B -> B[label=1.2] -> C[label=0.7] -- A;
+  B -> D;
+  D -> {B; C}
+  D -> E[label=0.2];
+  F -> F;
+  A [
+  fontColor=white,
+  color=red,
+  ]
+  }
+</textarea>
+
+<textarea id="example2" class="example">
+  digraph topology
+  {
+  node[shape=circle fontSize=12]
+  edge[length=170 fontSize=12]
+  "10.0.255.1" -> "10.0.255.3"[label="1.000"];
+  "10.0.255.1" -> "10.0.255.2"[label="1.000"];
+  "10.0.255.1" -> "10.0.255.2"[label="1.000"];
+  "10.0.255.1" -> "10.0.255.3"[label="1.000"];
+  "10.0.255.2" -> "10.0.255.1"[label="1.000"];
+  "10.0.255.2" -> "10.0.255.3"[label="1.000"];
+  "10.0.255.3" -> "10.0.255.1"[label="1.000"];
+  "10.0.255.3" -> "10.0.255.2"[label="1.000"];
+  "10.0.255.3" -> "10.0.3.0/24"[label="HNA", shape=solid];
+  "10.0.3.0/24"[shape=box];
+  "10.0.255.2" -> "10.0.2.0/24"[label="HNA"];
+  "10.0.2.0/24"[shape=box];
+  "10.0.255.1" -> "10.0.1.0/24"[label="HNA"];
+  "10.0.1.0/24"[shape=box];
+  }
+</textarea>
+
+<textarea id="example3" class="example">
+  digraph G  {
+  // note: not all attributes are recognized and supported by Network
+  //       unrecognized attributes are ignored
+
+  node[width=.25,height=.375,fontsize=15]
+  node [shape=filled fillcolor=#F1AAF0]
+  0-> 0 ;
+  1-> 1 ;
+  2-> 2 ;
+  3-> 3 ;
+  4-> 4 ;
+  5-> 5 ;
+  6-> 6 ;
+  7-> 5 ;
+  8-> 8 ;
+  9-> 9 ;
+  10-> 10 ;
+  11-> 10 ;
+  12-> 12 ;
+  13-> 5 ;
+  14-> 10 ;
+  15-> 0 ;
+  }
+</textarea>
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- Flot Charts JavaScript -->
+
+</body>
+
+</html>
